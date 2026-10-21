@@ -1,0 +1,18 @@
+---
+interface Props {
+  id: string;
+  eyebrow: string;
+  title: string;
+  intro?: string;
+}
+const { id, eyebrow, title, intro } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-title`} class="reveal mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-24">
+  <p class="font-mono text-sm text-accent">{eyebrow}</p>
+  <h2 id={`${id}-title`} class="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{title}</h2>
+  {intro && <p class="mt-4 max-w-2xl text-muted text-pretty">{intro}</p>}
+  <div class="mt-10">
+    <slot />
+  </div>
+</section>

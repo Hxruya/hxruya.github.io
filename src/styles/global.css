@@ -1,0 +1,73 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+}
+
+:root {
+  --bg: oklch(0.985 0.003 300);
+  --surface: oklch(1 0 0);
+  --border: oklch(0.91 0.01 300);
+  --fg: oklch(0.2 0.02 300);
+  --muted: oklch(0.5 0.02 300);
+  --accent: oklch(0.52 0.22 300);
+  --accent-soft: oklch(0.95 0.04 300);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: oklch(0.16 0.015 300);
+  --surface: oklch(0.2 0.02 300);
+  --border: oklch(0.3 0.025 300);
+  --fg: oklch(0.95 0.01 300);
+  --muted: oklch(0.7 0.02 300);
+  --accent: oklch(0.75 0.16 300);
+  --accent-soft: oklch(0.3 0.08 300);
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+  }
+  ::selection {
+    @apply bg-accent text-bg;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* Fade sections in as they scroll into view, where the browser supports it. */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+  @keyframes reveal {
+    from { opacity: 0; translate: 0 1.5rem; }
+  }
+}

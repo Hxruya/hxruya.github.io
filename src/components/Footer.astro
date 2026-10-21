@@ -1,0 +1,14 @@
+---
+import { site } from "@/data/site";
+---
+
+<footer class="border-t border-border">
+  <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 px-4 py-8 text-sm text-muted sm:flex-row sm:px-6">
+    <p>© {new Date().getFullYear()} {site.name}. Built with Astro and Tailwind CSS.</p>
+    <ul class="flex gap-4">
+      {site.socials.map((s) => (
+        <li><a href={s.href} class="hover:text-accent" target="_blank" rel="noopener">{s.label}</a></li>
+      ))}
+    </ul>
+  </div>
+</footer>

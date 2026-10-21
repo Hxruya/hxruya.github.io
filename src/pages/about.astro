@@ -1,0 +1,50 @@
+---
+import Base from "@/layouts/Base.astro";
+import PageHeader from "@/components/PageHeader.astro";
+import Section from "@/components/Section.astro";
+import { biography } from "@/data/biography";
+import { interests, interestsIntro, currently } from "@/data/interests";
+---
+
+<Base title="About" description="My story so far, how I got into software engineering, and what I enjoy outside of code.">
+  <PageHeader eyebrow="~/about" title="About me" intro={biography.intro} />
+
+  <Section id="timeline" eyebrow="01 · Timeline" title="The story so far">
+    <ol class="relative space-y-10 border-l border-border pl-6">
+      {biography.milestones.map((m) => (
+        <li class="relative">
+          <span aria-hidden="true" class="absolute top-1.5 -left-[1.95rem] size-3 rounded-full border-2 border-bg bg-accent"></span>
+          <p class="font-mono text-xs text-muted">{m.period}</p>
+          <h3 class="mt-1 font-semibold">{m.title}</h3>
+          <p class="mt-2 text-muted text-pretty">{m.detail}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section id="origin" eyebrow="02 · Origin" title="How I got into software engineering">
+    <p class="max-w-2xl text-muted text-pretty">{biography.origin}</p>
+  </Section>
+
+  <Section id="interests" eyebrow="03 · Interests" title="Things I enjoy" intro={interestsIntro}>
+    <div class="grid gap-4 md:grid-cols-2">
+      {interests.map((i) => (
+        <article class="rounded-2xl border border-border bg-surface p-6 transition hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5">
+          <h3 class="text-lg font-semibold">{i.name}</h3>
+          <p class="mt-2 text-muted text-pretty">{i.summary}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <Section id="currently" eyebrow="04 · Now" title="Currently">
+    <dl class="grid gap-4 sm:grid-cols-2">
+      {currently.map((c) => (
+        <div class="rounded-xl border border-border bg-surface px-5 py-4">
+          <dt class="font-mono text-xs uppercase tracking-wide text-accent">{c.label}</dt>
+          <dd class="mt-1 text-muted">{c.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </Section>
+</Base>

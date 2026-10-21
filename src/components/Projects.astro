@@ -1,0 +1,24 @@
+---
+import Section from "./Section.astro";
+import { projects } from "@/data/projects";
+---
+
+<Section id="projects" eyebrow="02 · Projects" title="Things I've built" intro="A few projects that show how I think and what I can ship.">
+  <div class="grid gap-4 md:grid-cols-2">
+    {projects.map((p) => (
+      <article class:list={["group flex flex-col rounded-2xl border border-border bg-surface p-6 transition hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5", p.featured && "md:col-span-2"]}>
+        <h3 class="text-lg font-semibold group-hover:text-accent">{p.name}</h3>
+        <p class="mt-2 flex-1 text-muted text-pretty">{p.summary}</p>
+        <ul class="mt-5 flex flex-wrap gap-2" aria-label="Tech used">
+          {p.tech.map((t) => <li class="rounded-md bg-accent-soft px-2 py-0.5 font-mono text-xs text-accent">{t}</li>)}
+        </ul>
+        {(p.repo || p.live) && (
+          <div class="mt-5 flex gap-4 text-sm font-medium">
+            {p.repo && <a href={p.repo} target="_blank" rel="noopener" class="hover:text-accent">Code ↗</a>}
+            {p.live && <a href={p.live} target="_blank" rel="noopener" class="hover:text-accent">Live ↗</a>}
+          </div>
+        )}
+      </article>
+    ))}
+  </div>
+</Section>

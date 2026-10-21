@@ -1,0 +1,25 @@
+---
+import Section from "./Section.astro";
+import { experience } from "@/data/experience";
+import { site } from "@/data/site";
+
+const linkedin = site.socials.find((s) => s.label === "LinkedIn");
+---
+
+<Section id="experience" eyebrow="03 · Experience" title="Where I've been">
+  <ol class="relative space-y-10 border-l border-border pl-6">
+    {experience.map((role) => (
+      <li class="relative">
+        <span aria-hidden="true" class="absolute top-1.5 -left-[1.95rem] size-3 rounded-full border-2 border-bg bg-accent"></span>
+        <p class="font-mono text-xs text-muted">{role.period}</p>
+        <h3 class="mt-1 font-semibold">{role.title} <span class="font-normal text-muted">· {role.org}</span></h3>
+        <ul class="mt-2 list-disc space-y-1 pl-5 text-muted marker:text-accent">
+          {role.points.map((pt) => <li>{pt}</li>)}
+        </ul>
+      </li>
+    ))}
+  </ol>
+  {linkedin && (
+    <a href={linkedin.href} target="_blank" rel="noopener" class="mt-10 inline-block text-sm font-medium text-accent hover:underline">Full history on LinkedIn ↗</a>
+  )}
+</Section>

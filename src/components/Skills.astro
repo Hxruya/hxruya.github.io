@@ -1,0 +1,45 @@
+---
+import Section from "./Section.astro";
+import { skillGroups, type Level } from "@/data/skills";
+
+// Each level differs in fill, border and icon, so it reads without relying on colour.
+const levelStyle: Record<Level, string> = {
+  "Daily use": "border-2 border-accent bg-accent text-bg font-semibold",
+  Comfortable: "border-2 border-accent bg-surface text-fg",
+  Learning: "border-2 border-dashed border-muted bg-transparent text-muted",
+};
+const levelIcon: Record<Level, string> = {
+  "Daily use": "●",
+  Comfortable: "◐",
+  Learning: "○",
+};
+// Only list levels that at least one skill uses.
+const usedLevels = (Object.keys(levelStyle) as Level[]).filter((level) =>
+  skillGroups.some((g) => g.skills.some((s) => s.level === level)),
+);
+---
+
+<Section id="skills" eyebrow="01 · Skills" title="Tech I work with" intro="The languages, frameworks and tools I reach for, grouped by where they fit.">
+  <ul class="mb-8 flex flex-wrap gap-2" aria-label="Skill levels">
+    {usedLevels.map((level) => (
+      <li class:list={["rounded-full px-3 py-1 font-mono text-xs", levelStyle[level]]}>
+        <span aria-hidden="true">{levelIcon[level]} </span>{level}
+      </li>
+    ))}
+  </ul>
+  <div class="grid gap-4 sm:grid-cols-2">
+    {skillGroups.map((group) => (
+      <article class="rounded-2xl border border-border bg-surface p-6 transition hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5">
+        <h3 class="font-semibold">{group.title}</h3>
+        <p class="mt-1 text-sm text-muted">{group.description}</p>
+        <ul class="mt-5 flex flex-wrap gap-2">
+          {group.skills.map((skill) => (
+            <li class:list={["rounded-full px-3 py-1 font-mono text-xs", levelStyle[skill.level]]} title={skill.level}>
+              <span aria-hidden="true">{levelIcon[skill.level]} </span>{skill.name}<span class="sr-only"> ({skill.level})</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    ))}
+  </div>
+</Section>
